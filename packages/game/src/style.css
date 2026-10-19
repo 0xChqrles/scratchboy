@@ -1,0 +1,35 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--c-ink-0, #000000);
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+/* The view: the canvas and the UI on one grid, laid out in game px and enlarged by CSS zoom or a
+   transform (App.tsx). .screen places it on a device pixel, outside the enlargement. */
+.screen {
+  position: absolute;
+}
+
+.view {
+  position: relative;
+}
+
+.game-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+canvas {
+  display: block;
+  image-rendering: pixelated;
+}

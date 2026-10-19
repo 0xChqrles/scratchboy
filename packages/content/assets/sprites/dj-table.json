@@ -1,0 +1,47 @@
+{
+  "frames": [
+    {
+      "filename": "0",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 36
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 36
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 36
+      },
+      "duration": 150
+    }
+  ],
+  "meta": {
+    "app": "scratchboy art/build.ts",
+    "version": "1",
+    "image": "dj-table.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 112,
+      "h": 36
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "dj-table-idle",
+        "from": 0,
+        "to": 0,
+        "direction": "forward"
+      }
+    ],
+    "layers": [],
+    "slices": []
+  }
+}

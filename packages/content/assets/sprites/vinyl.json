@@ -1,0 +1,201 @@
+{
+  "frames": [
+    {
+      "filename": "0",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "1",
+      "frame": {
+        "x": 25,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "2",
+      "frame": {
+        "x": 50,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "3",
+      "frame": {
+        "x": 75,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "4",
+      "frame": {
+        "x": 100,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "5",
+      "frame": {
+        "x": 125,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "6",
+      "frame": {
+        "x": 150,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    },
+    {
+      "filename": "7",
+      "frame": {
+        "x": 175,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 15
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 15
+      },
+      "duration": 150
+    }
+  ],
+  "meta": {
+    "app": "scratchboy art/build.ts",
+    "version": "1",
+    "image": "vinyl.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 200,
+      "h": 15
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "vinyl-angles",
+        "from": 0,
+        "to": 7,
+        "direction": "forward"
+      }
+    ],
+    "layers": [],
+    "slices": []
+  }
+}

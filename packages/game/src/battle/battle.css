@@ -1,0 +1,630 @@
+/* The battle UI layer, laid out in game pixels: 1 CSS px here is 1 game px, inside the view that
+   App.tsx enlarges with CSS zoom. Every size is a whole number of px. One font (Micro 5 at 11 px, 10 px lines, 22 px for emphasis), the palette's --c-* tokens, and one
+   way to show "you can tap this": a pink-2 border (.can). Keyboard focus is a white double frame
+   (end of this file), so it never reads as "tappable". */
+
+.battle,
+.rotate {
+  font-family: 'Micro 5', monospace;
+  font-size: 11px;
+  line-height: 10px;
+  color: var(--c-ink-7);
+  -webkit-font-smoothing: none;
+  /* Firefox on macOS: grayscale antialiasing, which keeps a glyph edge on a pixel edge crisp. */
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.battle {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  touch-action: manipulation;
+}
+
+.battle *,
+.rotate * {
+  box-sizing: border-box;
+}
+
+/* Text sits on the game pixel grid: the nudge moves the font's baseline onto a whole pixel, row 7
+   of a 10 px line (row 15 of a 20 px line with --text-nudge-big). The nudges are measured for the
+   current zoom and set on the zoomed element (theme.ts, setTextNudges). A capital's accent reaches
+   1 px above the line, so never clip an element the nudge moves: its clip edge would cut that row
+   mid-pixel. Clip such text across only (overflow-x: clip), or clip a parent. */
+.tx {
+  position: relative;
+  top: var(--text-nudge);
+  white-space: nowrap;
+}
+
+.glyph {
+  display: block;
+  flex: none;
+  margin-top: 1px;
+}
+
+.sprite {
+  display: block;
+  flex: none;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.dim {
+  color: var(--c-ink-5);
+}
+
+/* ------------------------------------------------------------------ buttons */
+
+/* The reset has no specificity, so every class below wins over it. */
+:where(.battle button) {
+  all: unset;
+  box-sizing: border-box;
+  pointer-events: auto;
+  cursor: pointer;
+  font: inherit;
+  color: var(--c-ink-5);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(.battle button[aria-disabled='true']) {
+  cursor: default;
+}
+
+.btn,
+.tab,
+.move,
+.bag-item,
+.close {
+  background: var(--c-ink-2);
+  border: 1px solid var(--c-ink-3);
+}
+
+.battle .can {
+  border-color: var(--c-pink-2);
+  color: var(--c-ink-7);
+}
+
+.battle .is-selected {
+  background: var(--c-pink-0);
+}
+
+/* ------------------------------------------------------------------ shared rows */
+
+.line {
+  display: flex;
+  align-items: flex-start;
+  height: 10px;
+  gap: 2px;
+}
+
+.stat {
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+  flex: none;
+}
+
+.slot {
+  display: flex;
+  flex: none;
+  min-width: 7px;
+  height: 10px;
+}
+
+.name {
+  overflow-x: clip;
+  overflow-y: visible;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.num {
+  min-width: 8px;
+  flex: none;
+}
+
+.hp {
+  display: block;
+  flex: none;
+  height: 3px;
+  margin-top: 3px;
+  background: var(--c-ink-0);
+}
+
+/* The dark bottom row is a border, not an inset shadow: WebKit draws an offset shadow across
+   device pixels under a transform. */
+.hp-fill {
+  display: block;
+  height: 100%;
+  background: var(--c-green-2);
+  border-bottom: 1px solid var(--c-green-1);
+}
+
+.hp-fill.is-danger {
+  background: var(--c-red-2);
+  border-bottom-color: var(--c-red-1);
+}
+
+/* ------------------------------------------------------------------ the command panel */
+
+.panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  padding: 1px 2px;
+  background: var(--c-ink-1);
+  border-top: 1px solid var(--c-ink-4);
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) 52px;
+  grid-template-rows: 10px minmax(0, 1fr);
+  column-gap: 2px;
+  row-gap: 1px;
+  grid-template-areas:
+    'tabs msg msg'
+    'tabs moves side';
+  pointer-events: auto;
+}
+
+.tabs {
+  grid-area: tabs;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1px;
+}
+
+/* Three or four turntables take two columns. Shared columns are cut to whole pixels (round), the
+   last one takes the rest: a fractional column would put its text between device pixels. */
+.tabs[data-count='3'],
+.tabs[data-count='4'] {
+  grid-template-columns: round(down, calc((100% - 1px) / 2), 1px) minmax(0, 1fr);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 2px 0 1px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.tab.is-broken .sprite {
+  opacity: 0.5;
+}
+
+.tab-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.tab-text .line {
+  gap: 1px;
+}
+
+.tab-text .name {
+  flex: 1 1 auto;
+}
+
+.slot-shield {
+  min-width: 15px;
+}
+
+.slot-state {
+  min-width: 11px;
+}
+
+.message {
+  grid-area: msg;
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  height: 10px;
+}
+
+.status {
+  display: flex;
+  gap: 1px;
+  flex: none;
+}
+
+.slot-status {
+  min-width: 12px;
+}
+
+.message-text {
+  flex: 1;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.message-text.is-note {
+  color: var(--c-red-3);
+}
+
+.arms {
+  display: flex;
+  gap: 1px;
+  flex: none;
+}
+
+.moves {
+  grid-area: moves;
+  display: grid;
+  /* Whole-pixel columns, like the tabs. Nearest, not down: the build's minifier writes a third as
+     33.3333%, a hair short, and a width that splits evenly must not lose a pixel. */
+  grid-template-columns: repeat(2, round(nearest, calc((100% - 4px) / 3), 1px)) minmax(0, 1fr);
+  gap: 2px;
+}
+
+.move {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1px 2px 2px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Two lines at most. The clip box is not the nudged text (the inner .tx): it starts 1 px higher, on
+   a whole pixel, so a capital's accent shows. */
+.move-name {
+  display: block;
+  height: 21px;
+  margin-top: -1px;
+  padding-top: 1px;
+  overflow: hidden;
+}
+
+.move-name .tx {
+  white-space: normal;
+}
+
+.key {
+  color: var(--c-ink-5);
+}
+
+.move-info {
+  gap: 2px;
+  overflow: hidden;
+}
+
+/* A bag vinyl's moves, shown read-only while the bag is open. */
+.moves.is-preview .move {
+  color: var(--c-ink-7);
+}
+
+.side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.btn .tx {
+  white-space: normal;
+}
+
+.btn-swap {
+  height: 18px;
+  flex: none;
+}
+
+/* End turn is used every turn: it gets the bigger target. */
+.btn-end,
+.btn-replay {
+  flex: 1;
+}
+
+/* The end of the fight, where the moves were. */
+.result {
+  grid-area: moves;
+  display: flex;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.result-title {
+  --text-nudge: var(--text-nudge-big);
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.result-title.is-won {
+  color: var(--c-green-2);
+}
+
+.result-title.is-lost {
+  color: var(--c-red-3);
+}
+
+/* ------------------------------------------------------------------ over the scene */
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.foe-head,
+.foe-card {
+  position: absolute;
+  background: var(--c-ink-1);
+  border: 1px solid var(--c-ink-4);
+}
+
+.foe-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  height: 12px;
+  padding: 0 2px;
+}
+
+.foe-head .name {
+  flex: 1 1 auto;
+}
+
+.slot-traps {
+  min-width: 20px;
+}
+
+.foe-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1px 2px;
+}
+
+.foe-card .line {
+  gap: 1px;
+}
+
+.foe-card .name {
+  flex: 1 1 auto;
+}
+
+.foe-card.is-broken {
+  color: var(--c-ink-5);
+}
+
+.target {
+  position: absolute;
+  border: 1px solid var(--c-ink-4);
+  box-shadow: inset 0 0 0 1px var(--c-ink-0);
+}
+
+.battle .target.can {
+  border-color: var(--c-pink-2);
+}
+
+/* Hangs centred under the target frame (placed from Stage.tsx). */
+.target-chip {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  height: 10px;
+  padding: 0 2px 0 1px;
+  background: var(--c-ink-1);
+  color: var(--c-ink-7);
+}
+
+.eff-strong {
+  color: var(--c-green-2);
+}
+
+.eff-weak {
+  color: var(--c-ink-5);
+}
+
+.deck-hit {
+  position: absolute;
+}
+
+.deck-cool {
+  position: absolute;
+  display: flex;
+  height: 10px;
+  padding: 0 2px 0 1px;
+  background: var(--c-ink-1);
+}
+
+/* A damage number stays by the rig it hit (above it, or beside it under the opponent's HUD), then
+   fades. Strong hits are the 22 px emphasis with a ×2; weak ones are dimmer with a ×0,5. No
+   transform animation: one over the WebGL canvas made Chrome drop part of the canvas. */
+.floater {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  color: var(--c-red-3);
+  text-shadow:
+    1px 0 0 var(--c-ink-0),
+    -1px 0 0 var(--c-ink-0),
+    0 1px 0 var(--c-ink-0),
+    0 -1px 0 var(--c-ink-0);
+  animation: floater-fade 900ms forwards;
+}
+
+.floater.is-strong > .tx:first-child {
+  --text-nudge: var(--text-nudge-big);
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.floater.is-weak {
+  color: var(--c-ink-6);
+}
+
+.floater.is-blocked {
+  color: var(--c-blue-3);
+}
+
+@keyframes floater-fade {
+  0%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floater {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ swap picker and result */
+
+.picker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 1px 2px 2px;
+  background: var(--c-ink-1);
+  border: 1px solid var(--c-ink-4);
+  pointer-events: auto;
+}
+
+.picker-head {
+  display: flex;
+  justify-content: space-between;
+  height: 10px;
+}
+
+.battle .close {
+  position: relative;
+  top: -1px;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  padding: 3px;
+}
+
+.close .glyph {
+  margin: 0;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-auto-rows: 22px;
+  gap: 2px;
+}
+
+.bag-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 1px;
+  overflow: hidden;
+}
+
+.bag-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bag-text .tx {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.bag-text .genre {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ the lines before the fight */
+
+/* The whole view is the button: a tap anywhere shows the next line. */
+.battle .talk {
+  position: absolute;
+  inset: 0;
+}
+
+/* In the command panel's place, at its size. */
+.talk-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  padding: 1px 2px 2px;
+  background: var(--c-ink-1);
+  border-top: 1px solid var(--c-ink-4);
+}
+
+.talk-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  height: 100%;
+  padding: 1px 3px;
+  background: var(--c-ink-2);
+  border: 1px solid var(--c-ink-3);
+}
+
+.talk-name {
+  color: var(--c-ink-5);
+}
+
+.talk-text {
+  white-space: normal;
+}
+
+/* ------------------------------------------------------------------ portrait prompt */
+
+.rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--c-ink-1);
+}
+
+/* Placed by whole pixels from App.tsx, not by flex: flex centring can land on half a pixel. */
+.rotate-at {
+  position: absolute;
+}
+
+.rotate-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rotate .glyph {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ keyboard focus */
+
+/* A white double frame (border and an inner ring) in place of the 1 px border: it reads as "Enter
+   goes here", never as the pink "you can tap this". Last, so it wins over .can and .target.can. */
+.battle button:focus-visible,
+.battle .target:focus-visible {
+  outline: none;
+  border-color: var(--c-ink-7);
+  box-shadow: inset 0 0 0 1px var(--c-ink-7);
+}

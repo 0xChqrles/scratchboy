@@ -1,0 +1,40 @@
+{
+  "frames": [
+    {
+      "filename": "0",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 480,
+        "h": 208
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 480,
+        "h": 208
+      },
+      "sourceSize": {
+        "w": 480,
+        "h": 208
+      },
+      "duration": 150
+    }
+  ],
+  "meta": {
+    "app": "scratchboy art/build.ts",
+    "version": "1",
+    "image": "backdrop-hiphop.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 480,
+      "h": 208
+    },
+    "scale": "1",
+    "frameTags": [],
+    "layers": [],
+    "slices": []
+  }
+}

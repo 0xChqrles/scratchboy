@@ -1,0 +1,125 @@
+{
+  "frames": [
+    {
+      "filename": "0",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 40
+      },
+      "duration": 150
+    },
+    {
+      "filename": "1",
+      "frame": {
+        "x": 32,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 40
+      },
+      "duration": 110
+    },
+    {
+      "filename": "2",
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 40
+      },
+      "duration": 140
+    },
+    {
+      "filename": "3",
+      "frame": {
+        "x": 96,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 40
+      },
+      "duration": 150
+    }
+  ],
+  "meta": {
+    "app": "scratchboy art/build.ts",
+    "version": "1",
+    "image": "amp.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 128,
+      "h": 40
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "amp-idle",
+        "from": 0,
+        "to": 0,
+        "direction": "forward"
+      },
+      {
+        "name": "amp-attack",
+        "from": 1,
+        "to": 2,
+        "direction": "forward"
+      },
+      {
+        "name": "amp-broken",
+        "from": 3,
+        "to": 3,
+        "direction": "forward"
+      }
+    ],
+    "layers": [],
+    "slices": []
+  }
+}

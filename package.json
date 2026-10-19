@@ -1,0 +1,12 @@
+{
+  "name": "scratchboy",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.14.0",
+  "scripts": {
+    "dev": "pnpm --filter @scratchboy/game dev",
+    "build": "pnpm --filter @scratchboy/game build",
+    "test": "pnpm -r --if-present run test",
+    "typecheck": "pnpm -r --if-present run typecheck"
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "name": "An ordinary fight to the end: 2 turntables vs 2 rigs",
+  "seed": 7,
+  "decks": {
+    "vinyl/hh-strike": {"id":"vinyl/hh-strike","genre":"hip-hop","artist":"artist/mc-one","defender":false, "moves": [
+      {"id":"move/hh-strike-1","effects":[{"kind":"damage","amount":10,"to":"enemy"}]},
+      {"id":"move/hh-strike-2","effects":[{"kind":"damage","amount":20,"to":"enemy"}]},
+      {"id":"move/hh-strike-3","effects":[{"kind":"damage","amount":12,"to":"enemies"}]}
+    ]},
+    "vinyl/jz-guard": {"id":"vinyl/jz-guard","genre":"jazz-blues","artist":"artist/jazz-one","defender":false, "moves": [
+      {"id":"move/jz-guard-1","effects":[{"kind":"shield","amount":8,"to":"ally"}]},
+      {"id":"move/jz-guard-2","effects":[{"kind":"shield","amount":5,"to":"allies"}]},
+      {"id":"move/jz-guard-3","effects":[{"kind":"haste","turns":2}]}
+    ]},
+    "rig/techno-drum": {"id":"rig/techno-drum","genre":"techno","defender":false, "moves": [
+      {"id":"move/techno-drum-1","effects":[{"kind":"damage","amount":10,"to":"enemy"}]},
+      {"id":"move/techno-drum-2","effects":[{"kind":"damage","amount":20,"to":"enemy"}]},
+      {"id":"move/techno-drum-3","effects":[{"kind":"damage","amount":12,"to":"enemies"}]}
+    ]},
+    "rig/dub-bass": {"id":"rig/dub-bass","genre":"reggae-dub","defender":false, "moves": [
+      {"id":"move/dub-bass-1","effects":[{"kind":"damage","amount":1,"to":"enemy"}]},
+      {"id":"move/dub-bass-2","effects":[{"kind":"stun","turns":1,"to":"enemies"}]},
+      {"id":"move/dub-bass-3","effects":[{"kind":"slow","turns":2}]}
+    ]}
+  },
+  "sides": [
+    {"id":"fighter/scratch-boy","arms":2,"initiative":10,"rigs":[{"id":"turntable/1","hp":40,"deck":"vinyl/hh-strike"},{"id":"turntable/2","hp":40,"deck":"vinyl/jz-guard"}],"bag":[]},
+    {"id":"opponent/test","arms":1,"initiative":5,"rigs":[{"id":"rig/1","hp":40,"deck":"rig/techno-drum"},{"id":"rig/2","hp":40,"deck":"rig/dub-bass"}],"bag":[]}
+  ],
+  "startEvents": [
+    {"type":"battle-started","first":0},
+    {"type":"turn-started","side":0,"turn":1}
+  ],
+  "actions": [
+    { "side": 0, "action": {"kind":"scratch","rig":0,"level":1,"target":0}, "events": [
+      {"type":"scratched","side":0,"rig":0,"level":1,"move":"move/hh-strike-1"},
+      {"type":"cooldown-started","side":0,"rig":0,"turns":1},
+      {"type":"hit","side":1,"rig":0,"amount":22,"hp":18,"effectiveness":"strong"}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":1,"level":1,"ally":1}, "events": [
+      {"type":"scratched","side":0,"rig":1,"level":1,"move":"move/jz-guard-1"},
+      {"type":"cooldown-started","side":0,"rig":1,"turns":1},
+      {"type":"shield-raised","side":0,"rig":1,"amount":8,"shield":8},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":2}
+    ]},
+    { "side": 1, "action": {"kind":"scratch","rig":0,"level":2,"target":1}, "events": [
+      {"type":"scratched","side":1,"rig":0,"level":2,"move":"move/techno-drum-2"},
+      {"type":"cooldown-started","side":1,"rig":0,"turns":2},
+      {"type":"blocked","side":0,"rig":1,"amount":8,"shield":0},
+      {"type":"hit","side":0,"rig":1,"amount":28,"hp":12,"effectiveness":"strong"},
+      {"type":"turn-ended","side":1},
+      {"type":"turn-started","side":0,"turn":3},
+      {"type":"cooldown-ticked","side":0,"rig":0,"cooldown":0},
+      {"type":"cooldown-ticked","side":0,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":4}
+    ]},
+    { "side": 1, "action": {"kind":"scratch","rig":1,"level":1,"target":1}, "events": [
+      {"type":"scratched","side":1,"rig":1,"level":1,"move":"move/dub-bass-1"},
+      {"type":"cooldown-started","side":1,"rig":1,"turns":1},
+      {"type":"hit","side":0,"rig":1,"amount":1,"hp":11,"effectiveness":"normal"},
+      {"type":"cooldown-ticked","side":1,"rig":0,"cooldown":1},
+      {"type":"turn-ended","side":1},
+      {"type":"turn-started","side":0,"turn":5}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":0,"level":3}, "events": [
+      {"type":"scratched","side":0,"rig":0,"level":3,"move":"move/hh-strike-3"},
+      {"type":"cooldown-started","side":0,"rig":0,"turns":2},
+      {"type":"hit","side":1,"rig":0,"amount":31,"hp":0,"effectiveness":"strong"},
+      {"type":"rig-broken","side":1,"rig":0},
+      {"type":"hit","side":1,"rig":1,"amount":15,"hp":25,"effectiveness":"normal"}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":1,"level":2}, "events": [
+      {"type":"scratched","side":0,"rig":1,"level":2,"move":"move/jz-guard-2"},
+      {"type":"cooldown-started","side":0,"rig":1,"turns":1},
+      {"type":"shield-raised","side":0,"rig":0,"amount":5,"shield":5},
+      {"type":"shield-raised","side":0,"rig":1,"amount":5,"shield":5},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":6},
+      {"type":"cooldown-ticked","side":1,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":1},
+      {"type":"shield-faded","side":0,"rig":0},
+      {"type":"shield-faded","side":0,"rig":1},
+      {"type":"turn-started","side":0,"turn":7},
+      {"type":"cooldown-ticked","side":0,"rig":0,"cooldown":1},
+      {"type":"cooldown-ticked","side":0,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":8}
+    ]},
+    { "side": 1, "action": {"kind":"scratch","rig":1,"level":1,"target":0}, "events": [
+      {"type":"scratched","side":1,"rig":1,"level":1,"move":"move/dub-bass-1"},
+      {"type":"cooldown-started","side":1,"rig":1,"turns":1},
+      {"type":"hit","side":0,"rig":0,"amount":1,"hp":39,"effectiveness":"normal"},
+      {"type":"turn-ended","side":1},
+      {"type":"turn-started","side":0,"turn":9}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":1,"level":1,"ally":0}, "events": [
+      {"type":"scratched","side":0,"rig":1,"level":1,"move":"move/jz-guard-1"},
+      {"type":"cooldown-started","side":0,"rig":1,"turns":1},
+      {"type":"shield-raised","side":0,"rig":0,"amount":8,"shield":8},
+      {"type":"cooldown-ticked","side":0,"rig":0,"cooldown":0},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":10},
+      {"type":"cooldown-ticked","side":1,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":1},
+      {"type":"shield-faded","side":0,"rig":0},
+      {"type":"turn-started","side":0,"turn":11}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":0,"level":2,"target":1}, "events": [
+      {"type":"scratched","side":0,"rig":0,"level":2,"move":"move/hh-strike-2"},
+      {"type":"cooldown-started","side":0,"rig":0,"turns":1},
+      {"type":"hit","side":1,"rig":1,"amount":24,"hp":1,"effectiveness":"normal"},
+      {"type":"cooldown-ticked","side":0,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":12}
+    ]},
+    { "side": 1, "action": {"kind":"scratch","rig":1,"level":1,"target":1}, "events": [
+      {"type":"scratched","side":1,"rig":1,"level":1,"move":"move/dub-bass-1"},
+      {"type":"cooldown-started","side":1,"rig":1,"turns":1},
+      {"type":"hit","side":0,"rig":1,"amount":1,"hp":10,"effectiveness":"normal"},
+      {"type":"turn-ended","side":1},
+      {"type":"turn-started","side":0,"turn":13}
+    ]},
+    { "side": 0, "action": {"kind":"end"}, "events": [
+      {"type":"cooldown-ticked","side":0,"rig":0,"cooldown":0},
+      {"type":"turn-ended","side":0},
+      {"type":"turn-started","side":1,"turn":14},
+      {"type":"cooldown-ticked","side":1,"rig":1,"cooldown":0},
+      {"type":"turn-ended","side":1},
+      {"type":"turn-started","side":0,"turn":15}
+    ]},
+    { "side": 0, "action": {"kind":"scratch","rig":0,"level":1,"target":1}, "events": [
+      {"type":"scratched","side":0,"rig":0,"level":1,"move":"move/hh-strike-1"},
+      {"type":"cooldown-started","side":0,"rig":0,"turns":1},
+      {"type":"hit","side":1,"rig":1,"amount":12,"hp":0,"effectiveness":"normal"},
+      {"type":"rig-broken","side":1,"rig":1},
+      {"type":"battle-won","side":0}
+    ]}
+  ],
+  "finalState": {
+    "rng": 3599190436,
+    "sides": [
+      {"id":"fighter/scratch-boy","arms":2,"initiative":10,"rigs":[{"id":"turntable/1","deck":"vinyl/hh-strike","hp":39,"maxHp":40,"cooldown":1,"shield":0,"trap":null},{"id":"turntable/2","deck":"vinyl/jz-guard","hp":10,"maxHp":40,"cooldown":0,"shield":0,"trap":null}],"bag":[],"slowTurns":0,"hasteTurns":0,"hiddenTraps":0},
+      {"id":"opponent/test","arms":1,"initiative":5,"rigs":[{"id":"rig/1","deck":"rig/techno-drum","hp":0,"maxHp":40,"cooldown":0,"shield":0,"trap":null},{"id":"rig/2","deck":"rig/dub-bass","hp":0,"maxHp":40,"cooldown":0,"shield":0,"trap":null}],"bag":[],"slowTurns":0,"hasteTurns":0,"hiddenTraps":0}
+    ],
+    "turn": {"number":15,"side":0,"used":[0],"slowed":false,"hasted":false},
+    "winner": 0
+  }
+}
